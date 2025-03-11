@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "ConsultarComponentesServlet", urlPatterns = {"/ConsultarComponentesServlet"})
 public class ConsultarComponentesServlet extends HttpServlet {
+    
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String ordenarPor = request.getParameter("ordenarPor");  // "asc" o "desc"
@@ -49,6 +50,10 @@ public class ConsultarComponentesServlet extends HttpServlet {
                     String.valueOf(rs.getInt("cantidad"))
                 });
             }
+            if (componentes == null) {
+                componentes = new ArrayList<>();
+            }
+            
             request.setAttribute("componentes", componentes);
             request.getRequestDispatcher("AreaEnsamblaje/consultarComponentesYComputadoras.jsp").forward(request, response);
 

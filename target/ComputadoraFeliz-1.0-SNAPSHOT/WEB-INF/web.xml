@@ -17,4 +17,30 @@
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>CrearComponenteServlet</servlet-name>
+        <servlet-class>ServletEnsamblaje.CrearComponenteServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CrearComponenteServlet</servlet-name>
+        <url-pattern>/CrearComponenteServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+    <servlet-name>ComponentesAgotadosServlet</servlet-name>
+    <servlet-class>Servlet.Ensamblaje.ComponentesAgotadosServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ComponentesAgotadosServlet</servlet-name>
+        <url-pattern>/ComponentesAgotadosServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ComponentesAPuntoDeAgotarseServlet</servlet-name>
+        <servlet-class>Servlet.Ensamblaje.ComponentesAPuntoDeAgotarseServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ComponentesAPuntoDeAgotarseServlet</servlet-name>
+        <url-pattern>/ComponentesAPuntoDeAgotarseServlet</url-pattern>
+    </servlet-mapping>
+
 </web-app>

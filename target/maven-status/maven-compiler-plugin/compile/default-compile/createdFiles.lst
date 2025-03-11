@@ -1,9 +1,10 @@
 com\mycompany\model\Computadora.class
 Servlet\Ensamblaje\RegistrarComputadoraVentasServle.class
 Servlet\adminServlet\CrearPiezaServlet.class
+Servlet\Ensamblaje\ComponentesAPuntoDeAgotarseServlet.class
 com\mycompany\computadorafeliz\resources\JakartaEE8Resource.class
-Servlet\Ensamblaje\ComponentesAPuntoDeAgotarseServle.class
 Servlet\Ensamblaje\ConsultarComputadorasServlet.class
+Servlet\Ensamblaje\VerificarComponentesServlet.class
 com\mycompany\model\Devolucion.class
 Servlet\adminServlet\CrearComputadoraServlet.class
 Servlet\adminServlet\CargaDatosServlet.class

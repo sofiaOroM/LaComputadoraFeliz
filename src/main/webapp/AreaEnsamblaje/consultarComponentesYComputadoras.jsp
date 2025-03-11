@@ -38,13 +38,17 @@
                 <tbody>
                     <% 
                         List<String[]> componentes = (List<String[]>) request.getAttribute("componentes");
-                        for (String[] componente : componentes) {
-                            out.print("<tr>");
-                            out.print("<td>" + componente[1] + "</td>");
-                            out.print("<td>" + componente[2] + "</td>");
-                            out.print("<td>" + componente[3] + "</td>");
-                            out.print("<td>" + componente[4] + "</td>");
-                            out.print("</tr>");
+                        if (componentes != null) {
+                            for (String[] componente : componentes) {
+                                out.print("<tr>");
+                                out.print("<td>" + componente[1] + "</td>");
+                                out.print("<td>" + componente[2] + "</td>");
+                                out.print("<td>" + componente[3] + "</td>");
+                                out.print("<td>" + componente[4] + "</td>");
+                                out.print("</tr>");
+                            }
+                        } else {
+                            out.print("<tr><td colspan='2'>No hay componentes disponibles.</td></tr>");
                         }
                     %>
                 </tbody>
@@ -69,13 +73,17 @@
                 <tbody>
                     <% 
                         List<String[]> computadoras = (List<String[]>) request.getAttribute("computadoras");
-                        for (String[] computadora : computadoras) {
-                            out.print("<tr>");
-                            out.print("<td>" + computadora[1] + "</td>");
-                            out.print("<td>" + computadora[2] + "</td>");
-                            out.print("<td>" + computadora[3] + "</td>");
-                            out.print("</tr>");
-                        }
+                        if (componentes != null) {
+                            for (String[] computadora : computadoras) {
+                                out.print("<tr>");
+                                out.print("<td>" + computadora[1] + "</td>");
+                                out.print("<td>" + computadora[2] + "</td>");
+                               out.print("<td>" + computadora[3] + "</td>");
+                                out.print("</tr>");
+                            }
+                        } else {
+                          out.print("<tr><td colspan='2'>No hay componentes disponibles.</td></tr>");                        
+                        }    
                     %>
                 </tbody>
             </table>

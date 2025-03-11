@@ -22,14 +22,15 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author sofia
  */
-@WebServlet(name = "ComponentesAPuntoDeAgotarseServle", urlPatterns = {"/ComponentesAPuntoDeAgotarseServle"})
-public class ComponentesAPuntoDeAgotarseServle extends HttpServlet {
+@WebServlet(name = "ComponentesAPuntoDeAgotarseServlet", urlPatterns = {"/ComponentesAPuntoDeAgotarseServlet"})
+public class ComponentesAPuntoDeAgotarseServlet extends HttpServlet {
+    
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         List<String[]> componentesPuntoDeAgotarse = new ArrayList<>();
 
         try (Connection conn = ConexionDB.getConnection()) {
-            String sql = "SELECT * FROM componente WHERE cantidad <= 5";
+            String sql = "SELECT * FROM componente WHERE cantidad BETWEEN 1 AND 5";
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
 
@@ -56,22 +57,28 @@ public class ComponentesAPuntoDeAgotarseServle extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ComponentesAPuntoDeAgotarseServle</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ComponentesAPuntoDeAgotarseServle at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        doGet(request, response);
     }
+
+//    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+//           throws ServletException, IOException {
+//        response.setContentType("text/html;charset=UTF-8");
+//        try (PrintWriter out = response.getWriter()) {
+//            /* TODO output your page here. You may use following sample code. */
+//            out.println("<!DOCTYPE html>");
+//            out.println("<html>");
+//            out.println("<head>");
+//            out.println("<title>Servlet ComponentesAPuntoDeAgotarseServle</title>");            
+//            out.println("</head>");
+//            out.println("<body>");
+//            out.println("<h1>Servlet ComponentesAPuntoDeAgotarseServle at " + request.getContextPath() + "</h1>");
+//            out.println("</body>");
+//            out.println("</html>");
+//        }
+//    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -96,11 +103,11 @@ public class ComponentesAPuntoDeAgotarseServle extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
+//    @Override
+//    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+//            throws ServletException, IOException {
+//        processRequest(request, response);
+//    }
 
     /**
      * Returns a short description of the servlet.
