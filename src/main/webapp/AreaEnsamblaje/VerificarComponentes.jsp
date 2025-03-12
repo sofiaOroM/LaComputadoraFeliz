@@ -17,22 +17,49 @@
         body { font-family: Arial, sans-serif; text-align: center; }
         table { width: 80%; margin: 20px auto; border-collapse: collapse; }
         th, td { border: 1px solid black; padding: 8px; text-align: center; }
-        th { background-color: #4CAF50; color: white; }
-        .agotado { background-color: #ff4c4c; color: white; }
-        .punto-agotarse { background-color: #ffb84c; }
+        th { background-color: #0056b3; color: #f4f4f4; }
+        .agotado { background-color: #f4f4f4; color: white; }
+        .punto-agotarse { background-color: #f4f4f4; }
     </style>
 </head>
 <body>
+    <%--<jsp:include page="/VerificarComponentesServlet"></jsp:include>
+    --%>
     <pre>
-        Componentes Agotados: <%= request.getAttribute("componentesAgotados") %>
-        Componentes por Agotarse: <%= request.getAttribute("componentesPuntoDeAgotarse") %>
+        Componentes Agotados: <%= request.getAttribute("${pageContext.request.contextPath}/VerificarComponentesServlet/componentesAgotados") %>
+        Componentes por Agotarse: <%= request.getAttribute("${pageContext.request.contextPath}/componentesPuntoDeAgotarse") %>
     </pre>
+    
+    <section class="section">
+        <div class="container">
+            <h1 class="title">Verificación de Componentes</h1>
+            <form action="${pageContext.request.contextPath}/VerificarComponentesServlet" method="get">
+                <div class="field">
+                    <label class="label">Ordenar por Cantidad</label>
+                    <div class="control">
+                        <div class="select">
+                            <select name="orden">
+                                <option value="asc">Menor a Mayor</option>
+                                <option value="desc">Mayor a Menor</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <button class="button is-primary" type="submit">Ordenar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
     <h2>Componentes Agotados</h2>
     <table>
         <tr>
             <th>ID</th>
             <th>Nombre</th>
         </tr>
+        
         <%
             List<String[]> componentesAgotados = (List<String[]>) request.getAttribute("componentesAgotados");
             if (componentesAgotados != null && !componentesAgotados.isEmpty()) {
@@ -79,7 +106,7 @@
         %>
     </table>
 
-    <a href="panelEnsamblaje.jsp">Volver al menú</a>
+    <a href="${pageContext.request.contextPath}/AreaEnsamblaje/panelEnsamblaje.jsp">Volver al menú</a>
 </body>
 </html>
 
