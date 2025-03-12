@@ -14,6 +14,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" rel="stylesheet">
 </head>
 <body>
+    <jsp:include page="/ConsultarComponentesServlet"></jsp:include>
+
     <section class="section">
         <div class="container">
             <h1 class="title">Consulta de Componentes y Computadoras Ensambladas</h1>
@@ -88,9 +90,9 @@
                 </tbody>
             </table>
 
-            <a href="panelEnsamblaje.jsp" class="button is-light">Volver</a>
         </div>
     </section>
+    <a href="${pageContext.request.contextPath}/AreaEnsamblaje/panelEnsamblaje.jsp" class="button is-light">Volver</a>                
 </body>
 </html>
 

@@ -56,6 +56,7 @@ public class ConsultarComponentesServlet extends HttpServlet {
             
             request.setAttribute("componentes", componentes);
             request.getRequestDispatcher("AreaEnsamblaje/consultarComponentesYComputadoras.jsp").forward(request, response);
+            conn.close();
 
         } catch (Exception e) {
             e.printStackTrace();

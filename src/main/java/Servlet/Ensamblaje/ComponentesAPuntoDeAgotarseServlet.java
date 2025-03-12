@@ -42,6 +42,7 @@ public class ComponentesAPuntoDeAgotarseServlet extends HttpServlet {
             }
             request.setAttribute("componentesPuntoDeAgotarse", componentesPuntoDeAgotarse);
             request.getRequestDispatcher("AreaEnsamblaje/componentesAPuntoDeAgotarse.jsp").forward(request, response);
+            conn.close();
 
         } catch (Exception e) {
             e.printStackTrace();

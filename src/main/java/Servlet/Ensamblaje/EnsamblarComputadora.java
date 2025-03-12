@@ -1,3 +1,4 @@
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
@@ -6,106 +7,65 @@ package Servlet.Ensamblaje;
 
 import DataBase.ConexionDB;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
+import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
+import java.util.Date;
 
-/**
- *
- * @author sofia
- */
 @WebServlet(name = "EnsamblarComputadora", urlPatterns = {"/EnsamblarComputadora"})
 public class EnsamblarComputadora extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        
-        int idComputadora = Integer.parseInt(request.getParameter("idComputadora"));
-        int idComponente = Integer.parseInt(request.getParameter("idComponente"));
-        int cantidad = Integer.parseInt(request.getParameter("cantidad"));
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<Map<String, String>> computadoras = new ArrayList<>();
 
         try (Connection conn = ConexionDB.getConnection()) {
-            String sql = "INSERT INTO ensamblaje (id_computadora, id_componente, cantidad) VALUES (?, ?, ?)";
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, idComputadora);
-            stmt.setInt(2, idComponente);
-            stmt.setInt(3, cantidad);
-            stmt.executeUpdate();
-
-            response.sendRedirect("AreaEnsamblaje/panelEnsamblaje.jsp?success=ComputadoraEnsamblada");
-        } catch (Exception e) {
+            String query = "SELECT * FROM computadora";
+            try (PreparedStatement stmt = conn.prepareStatement(query); ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Map<String, String> computadora = new HashMap<>();
+                    computadora.put("id", String.valueOf(rs.getInt("id")));
+                    computadora.put("nombre", rs.getString("nombre"));
+                    computadora.put("precio", String.valueOf(rs.getDouble("precio")));
+                    computadoras.add(computadora);
+                }
+            }
+//            request.setAttribute("computadoras", computadoras);
+        } catch (SQLException e) {
             e.printStackTrace();
-            response.sendRedirect("AreaEnsamblaje/panelEnsamblaje.jsp?error=ErrorAlEnsamblar");
+            request.setAttribute("mensaje", "Error cargando computadoras: " + e.getMessage());
         }
+        request.setAttribute("computadoras", computadoras);
+        request.getRequestDispatcher("/AreaEnsamblaje/EnsamblarComputadora.jsp").forward(request, response);
     }
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet EnsamblarComputadora</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet EnsamblarComputadora at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String computadoraId = request.getParameter("computadoraId");
+
+        if (computadoraId == null || computadoraId.isEmpty()) {
+            request.setAttribute("mensaje", "Seleccione una computadora válida.");
+            doGet(request, response);
+            return;
         }
+
+        try (Connection conn = ConexionDB.getConnection()) {
+            String query = "INSERT INTO ensamblaje (computadora_id, estado, fecha_ensamblaje) VALUES (?, 'pendiente', NOW())";
+            try (PreparedStatement stmt = conn.prepareStatement(query)) {
+                stmt.setInt(1, Integer.parseInt(computadoraId));
+                int filas = stmt.executeUpdate();
+
+                if (filas > 0) {
+                    request.setAttribute("mensaje", "¡Computadora ensamblada correctamente!");
+                } else {
+                    request.setAttribute("mensaje", "Error ensamblando la computadora.");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            request.setAttribute("mensaje", "Error durante el ensamblaje: " + e.getMessage());
+        }
+        doGet(request, response);
     }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-//    @Override
-//    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-//            throws ServletException, IOException {
-//        processRequest(request, response);
-//    }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 }

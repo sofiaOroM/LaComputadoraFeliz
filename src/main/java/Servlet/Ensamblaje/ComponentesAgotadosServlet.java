@@ -50,7 +50,8 @@ public class ComponentesAgotadosServlet extends HttpServlet {
             
             // Redirigir a la vista JSP que muestra los componentes agotados
             request.getRequestDispatcher("AreaEnsamblaje/consultarComponentesAgotados.jsp").forward(request, response);
-            
+                       conn.close();
+ 
         } catch (Exception e) {
             e.printStackTrace();
             // En caso de error, redirigir al panel de ensamblaje con un mensaje de error

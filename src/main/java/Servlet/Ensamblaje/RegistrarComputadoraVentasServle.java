@@ -35,6 +35,7 @@ public class RegistrarComputadoraVentasServle extends HttpServlet {
             stmt.executeUpdate();
 
         response.sendRedirect("AreaEnsamblaje/panelEnsamblaje.jsp?success=ComputadoraRegistradaVentas");
+        conn.close();
         } catch (Exception e) {
             e.printStackTrace();
             response.sendRedirect("AreaEnsamblaje/panelEnsamblaje.jsp?error=ErrorAlRegistrarVentas");

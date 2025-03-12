@@ -14,6 +14,13 @@ public class Componente {
     private double costo;
     private int cantidad;
 
+    public Componente(String tipo, String nombre, int id, int cantidad, String categoria, int costo) {
+        this.id = id;
+        this.tipo = tipo;
+        this.costo = costo;
+        this.cantidad = cantidad;
+    }
+
     public Componente(int id, String tipo, double costo, int cantidad) {
         this.id = id;
         this.tipo = tipo;

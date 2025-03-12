@@ -50,6 +50,7 @@ public class ConsultarComputadorasServlet extends HttpServlet {
             }
             request.setAttribute("computadoras", computadoras);
             request.getRequestDispatcher("AreaEnsamblaje/consultarComponentesYComputadoras.jsp").forward(request, response);
+            conn.close();
 
         } catch (Exception e) {
             e.printStackTrace();

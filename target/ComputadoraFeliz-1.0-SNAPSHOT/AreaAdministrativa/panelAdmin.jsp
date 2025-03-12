@@ -4,79 +4,71 @@
     Author     : sofia
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Area Aministrativa</title>
-        <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" rel="stylesheet">        
-    </head>
-    <body>
-        <form action="CrearComputadoraServlet" method="POST">
-            <!-- Nombre de Computadora -->
-            <div class="field">
-                <label class="label" for="nombreComputadora">Nombre de Computadora</label>
-                <div class="control">
-                    <input class="input" type="text" id="nombreComputadora" name="nombreComputadora" required>
-                </div>
-            </div>
+<head>
+    <meta charset="UTF-8">
+    <title>Panel Administración</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        .menu {
+            list-style: none;
+            padding: 0;
+        }
+        .menu li {
+            margin: 10px 0;
+        }
+        .menu a {
+            display: block;
+            padding: 10px;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            border-radius: 5px;
+        }
+        .menu a:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <%@ page import="DataBase.ConexionDB" %>
+        <%
+            String estadoConexion = ConexionDB.verificarConexion();
+        %>
 
-            <!-- Precio de Computadora -->
-            <div class="field">
-                <label class="label" for="precio">Precio de Computadora</label>
-                <div class="control">
-                    <input class="input" type="number" id="precio" name="precio" required>
-                </div>
-            </div>
-
-            <div class="field">
-                <div class="control">
-                    <button type="submit" class="button is-link">Crear Computadora</button>
-                </div>
-            </div>
-        </form>
-        
-        <form action="CrearPiezaServlet" method="POST">
-            <!-- Nombre de Pieza -->
-            <div class="field">
-                <label class="label" for="nombrePieza">Nombre de Pieza</label>
-                <div class="control">
-                    <input class="input" type="text" id="nombrePieza" name="nombrePieza" required>
-                </div>
-            </div>
-
-            <!-- Costo de Pieza -->
-            <div class="field">
-                <label class="label" for="costoPieza">Costo de Pieza</label>
-                <div class="control">
-                    <input class="input" type="number" id="costoPieza" name="costoPieza" required>
-                </div>
-            </div>
-
-            <div class="field">
-                <div class="control">
-                    <button type="submit" class="button is-link">Crear Pieza</button>
-                </div>
-            </div>
-        </form>
-        
-        <form action="EliminarUsuarioServlet" method="POST">
-            <!-- Nombre de Usuario a Eliminar -->
-            <div class="field">
-                <label class="label" for="nombreEliminar">Nombre de Usuario</label>
-                <div class="control">
-                    <input class="input" type="text" id="nombreEliminar" name="nombreEliminar" required>
-                </div>
-            </div>
-
-            <div class="field">
-                <div class="control">
-                    <button type="submit" class="button is-danger">Eliminar Usuario</button>
-                </div>
-            </div>
-        </form>
-
-
-    </body>
+        <pre>
+            Estado de la conexión: <%= estadoConexion %>
+        </pre>
+    <div class="container">
+        <h2>Panel de Administración</h2>
+        <ul class="menu">
+            <li><a href="GestionUsuario.jsp">Gestion De Usuarios</a></li>
+            <li><a href="CrearComponentes.jsp">Crear Componente</a></li>
+            <li><a href="CrearComputadora.jsp">Crear Computadora</a></li>
+            <li><a href="Reportes.jsp">Reportes</a></li>
+        </ul>
+    </div>
+<% String error = request.getParameter("error"); %>
+<% if (error != null) { %>
+    <div class="notification is-danger"><%= error %></div>
+<% } %>
+</body>
 </html>

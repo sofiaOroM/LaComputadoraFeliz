@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
-   version="4.0">
+<web-app version="4.0" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
     <session-config>
         <session-timeout>
             30
         </session-timeout>
-
     </session-config>
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
@@ -26,14 +22,13 @@
         <url-pattern>/CrearComponenteServlet</url-pattern>
     </servlet-mapping>
     <servlet>
-    <servlet-name>ComponentesAgotadosServlet</servlet-name>
-    <servlet-class>Servlet.Ensamblaje.ComponentesAgotadosServlet</servlet-class>
+        <servlet-name>ComponentesAgotadosServlet</servlet-name>
+        <servlet-class>Servlet.Ensamblaje.ComponentesAgotadosServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ComponentesAgotadosServlet</servlet-name>
         <url-pattern>/ComponentesAgotadosServlet</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>ComponentesAPuntoDeAgotarseServlet</servlet-name>
         <servlet-class>Servlet.Ensamblaje.ComponentesAPuntoDeAgotarseServlet</servlet-class>
@@ -42,5 +37,12 @@
         <servlet-name>ComponentesAPuntoDeAgotarseServlet</servlet-name>
         <url-pattern>/ComponentesAPuntoDeAgotarseServlet</url-pattern>
     </servlet-mapping>
-
+    <servlet>
+        <servlet-name>ModificarComponentes</servlet-name>
+        <servlet-class>Servlet.Ensamblaje.ModificarComponenteServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ModificarComponenteServlet</servlet-name>
+        <url-pattern>/ModificarComponenteServlet</url-pattern>
+    </servlet-mapping>
 </web-app>

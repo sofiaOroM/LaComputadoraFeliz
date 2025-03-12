@@ -48,11 +48,20 @@
     </style>
 </head>
 <body>
+    <%@ page import="DataBase.ConexionDB" %>
+        <%
+            String estadoConexion = ConexionDB.verificarConexion();
+        %>
+
+        <pre>
+            Estado de la conexión: <%= estadoConexion %>
+        </pre>
     <div class="container">
         <h2>Panel de Ensamblaje</h2>
         <ul class="menu">
             <li><a href="VerificarComponentes.jsp">Consultar Componentes Agotados</a></li>
-            <li><a href="CrearComponente.jsp">Crear Componente</a></li>
+            <li><a href="ModificarComponente.jsp">Gestion De Componentes</a></li>
+            <li><a href="EnsamblarComputadora.jsp">Ensamblar Computadoras</a></li>
             <li><a href="consultarComponentesYComputadoras.jsp">Consultar Componentes y Computadoras</a></li>
         </ul>
     </div>
