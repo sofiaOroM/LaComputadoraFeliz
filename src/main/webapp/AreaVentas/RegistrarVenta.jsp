@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -34,9 +33,24 @@
             xhr.send();
         }
     </script>
-</head>
+</head> 
 <body>
     <section class="section">
+                <!-- Formulario para buscar cliente -->
+        <form action="${pageContext.request.contextPath}/RegistrarVentaServlet" method="get">
+            <div class="field">
+                <label class="label">NIT</label>
+                <div class="control">
+                    <input class="input" type="text" name="nit" value="<%= request.getParameter("nit") != null ? request.getParameter("nit") : "" %>" required>
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <button class="button is-info" type="submit">Buscar Cliente</button>
+                </div>
+            </div>
+        </form>
+
         <div class="container">
             <h1 class="title">Registrar Venta</h1>
             <form action="${pageContext.request.contextPath}/RegistrarVentaServlet" method="post">
@@ -102,7 +116,7 @@
             </form>
         </div>
     </section>
-    <a href="panelVentas.jsp" class="button is-light">Volver al Panel</a>
+    <a href="${pageContext.request.contextPath}/panelVentas.jsp" class="button is-light">Volver al Panel</a>
 </body>
 </html>
                 

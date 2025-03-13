@@ -13,7 +13,7 @@
 
     <section class="section">
         <div class="container">
-            <h1 class="title has-text-centered">Gestión de Uusuarios</h1>
+            <h1 class="title has-text-centered">Gestión de Usuarios</h1>
 
             <% String mensaje = (String) request.getAttribute("mensaje"); %>
             <% if (mensaje != null) { %>
@@ -177,7 +177,7 @@
                 </div>
             <% } %>
         </div>
-        <a href="panelAdmin.jsp" class="button is-light">Volver al Panel</a>
+        <a href="${pageContext.request.contextPath}/panelAdmin.jsp" class="button is-light">Volver al Panel</a>
     </section>
 
     <script>

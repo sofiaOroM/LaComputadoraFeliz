@@ -21,19 +21,20 @@ public class EnsamblarComputadora extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Map<String, String>> computadoras = new ArrayList<>();
 
-        try (Connection conn = ConexionDB.getConnection()) {
-            String query = "SELECT * FROM computadora";
-            try (PreparedStatement stmt = conn.prepareStatement(query); ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    Map<String, String> computadora = new HashMap<>();
-                    computadora.put("id", String.valueOf(rs.getInt("id")));
-                    computadora.put("nombre", rs.getString("nombre"));
-                    computadora.put("precio", String.valueOf(rs.getDouble("precio")));
-                    computadoras.add(computadora);
-                }
+        try (Connection conn = ConexionDB.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM computadora"); 
+            ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                Map<String, String> computadora = new HashMap<>();
+                computadora.put("id", String.valueOf(rs.getInt("id")));
+                computadora.put("nombre", rs.getString("nombre"));
+                computadora.put("precio", String.valueOf(rs.getDouble("precio")));
+                computadoras.add(computadora);
             }
+        }
 //            request.setAttribute("computadoras", computadoras);
-        } catch (SQLException e) {
+         catch (SQLException e) {
             e.printStackTrace();
             request.setAttribute("mensaje", "Error cargando computadoras: " + e.getMessage());
         }
@@ -50,17 +51,16 @@ public class EnsamblarComputadora extends HttpServlet {
             return;
         }
 
-        try (Connection conn = ConexionDB.getConnection()) {
-            String query = "INSERT INTO ensamblaje (computadora_id, estado, fecha_ensamblaje) VALUES (?, 'pendiente', NOW())";
-            try (PreparedStatement stmt = conn.prepareStatement(query)) {
-                stmt.setInt(1, Integer.parseInt(computadoraId));
-                int filas = stmt.executeUpdate();
+        try (Connection conn = ConexionDB.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO ensamblaje (computadora_id, estado, fecha_ensamblaje) VALUES (?, 'pendiente', NOW())")) {
 
-                if (filas > 0) {
-                    request.setAttribute("mensaje", "¡Computadora ensamblada correctamente!");
-                } else {
-                    request.setAttribute("mensaje", "Error ensamblando la computadora.");
-                }
+            stmt.setInt(1, Integer.parseInt(computadoraId));
+            int filas = stmt.executeUpdate();
+
+            if (filas > 0) {
+                request.setAttribute("mensaje", "¡Computadora ensamblada correctamente!");
+            } else {
+                request.setAttribute("mensaje", "Error ensamblando la computadora.");
             }
         } catch (SQLException e) {
             e.printStackTrace();

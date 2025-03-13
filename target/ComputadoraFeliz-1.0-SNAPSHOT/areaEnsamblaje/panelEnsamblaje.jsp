@@ -1,8 +1,9 @@
-<%-- 
-    Document   : ensamblajePanel
-    Created on : 9/03/2025, 15:59:48
-    Author     : sofia
---%>
+
+<%@ page import="javax.servlet.http.HttpSession" %>
+<%
+    HttpSession sesion = request.getSession(false);
+    String rol = (sesion != null) ? (String) sesion.getAttribute("rol") : null;
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,16 +49,14 @@
     </style>
 </head>
 <body>
-    <%@ page import="DataBase.ConexionDB" %>
-        <%
-            String estadoConexion = ConexionDB.verificarConexion();
-        %>
 
-        <pre>
-            Estado de la conexión: <%= estadoConexion %>
-        </pre>
     <div class="container">
         <h2>Panel de Ensamblaje</h2>
+            
+        <%-- Mostrar el botón solo si el usuario es admin --%>
+            <% if ("admin".equals(rol)) { %>
+                <a href="${pageContext.request.contextPath}/AreaAdministrativa/panelAdmin.jsp" class="button is-light">Volver al Panel de Administración</a>
+            <% } %>
         <ul class="menu">
             <li><a href="VerificarComponentes.jsp">Consultar Componentes Agotados</a></li>
             <li><a href="ModificarComponente.jsp">Gestion De Componentes</a></li>

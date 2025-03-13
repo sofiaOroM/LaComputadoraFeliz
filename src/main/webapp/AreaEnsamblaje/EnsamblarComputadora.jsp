@@ -25,7 +25,7 @@
             <% String mensaje = (String) request.getAttribute("mensaje"); %>
             <% if (mensaje != null) { %>
                 <div class="notification is-info">
-                    <noscript>⚠️ <%= mensaje %></noscript>
+                   ️ <%= mensaje %>
                 </div>
             <% } %>
             <% 

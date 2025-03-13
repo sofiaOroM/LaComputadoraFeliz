@@ -25,10 +25,6 @@
 <body>
     <%--<jsp:include page="/VerificarComponentesServlet"></jsp:include>
     --%>
-    <pre>
-        Componentes Agotados: <%= request.getAttribute("${pageContext.request.contextPath}/VerificarComponentesServlet/componentesAgotados") %>
-        Componentes por Agotarse: <%= request.getAttribute("${pageContext.request.contextPath}/componentesPuntoDeAgotarse") %>
-    </pre>
     
     <section class="section">
         <div class="container">

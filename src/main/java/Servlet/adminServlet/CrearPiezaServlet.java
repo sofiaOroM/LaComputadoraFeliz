@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package Servlet.adminServlet;
 
 import DataBase.ConexionDB;
@@ -17,18 +13,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
- * @author sofia
+ * Servlet para crear un componente en la base de datos
  */
 @WebServlet(name = "CrearPiezaServlet", urlPatterns = {"/CrearPiezaServlet"})
 public class CrearPiezaServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String nombrePieza = request.getParameter("nombrePieza");
-        double costoPieza = Double.parseDouble(request.getParameter("costoPieza"));
+        String categoria = request.getParameter("categoria");
+        String nombre = request.getParameter("nombre");
+        double costo = Double.parseDouble(request.getParameter("costo"));
+        int cantidad = Integer.parseInt(request.getParameter("cantidad"));
 
-        if (nombrePieza == null || nombrePieza.isEmpty() || costoPieza <= 0) {
-            request.setAttribute("error", "Nombre o costo inválido.");
-            request.getRequestDispatcher("panelAdmin.jsp").forward(request, response);
+        // Validación de los parámetros
+        if (categoria == null || categoria.isEmpty() || nombre == null || nombre.isEmpty() || costo <= 0 || cantidad <= 0) {
+            request.setAttribute("error", "Datos inválidos. Verifica la información.");
+            request.getRequestDispatcher("AreaAdministrativa/CrearComponentes.jsp").forward(request, response);
             return;
         }
 
@@ -38,25 +36,28 @@ public class CrearPiezaServlet extends HttpServlet {
         try {
             conn = ConexionDB.getConnection();
 
-            // Insertar nueva pieza
-            String sql = "INSERT INTO pieza (nombre, costo) VALUES (?, ?)";
+            // Insertar nuevo componente
+            String sql = "INSERT INTO componente (categoria, nombre, costo, cantidad, cantidad_reservada) VALUES (?, ?, ?, ?, 0)";
             pst = conn.prepareStatement(sql);
-            pst.setString(1, nombrePieza);
-            pst.setDouble(2, costoPieza);
+            pst.setString(1, categoria);
+            pst.setString(2, nombre);
+            pst.setDouble(3, costo);
+            pst.setInt(4, cantidad);
 
             int rowsAffected = pst.executeUpdate();
 
             if (rowsAffected > 0) {
-                response.sendRedirect("panelAdmin.jsp");  // Redirigir al panel
+                request.setAttribute("success", "Componente creado con éxito.");
+                response.sendRedirect("AreaAdministrativa/panelAdmin.jsp");  // Redirigir al panel
             } else {
-                request.setAttribute("error", "Hubo un error al crear la pieza.");
-                request.getRequestDispatcher("panelAdmin.jsp").forward(request, response);
+                request.setAttribute("error", "Hubo un error al crear el componente.");
+                request.getRequestDispatcher("AreaAdministrativa/CrearComponentes.jsp").forward(request, response);
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
             request.setAttribute("error", "Error al conectarse a la base de datos.");
-            request.getRequestDispatcher("panelAdmin.jsp").forward(request, response);
+            request.getRequestDispatcher("AreaAdministrativa/CrearComponentes.jsp").forward(request, response);
         } finally {
             try {
                 if (pst != null) pst.close();
@@ -66,69 +67,4 @@ public class CrearPiezaServlet extends HttpServlet {
             }
         }
     }
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet crearPiezaServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet crearPiezaServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-//    @Override
-//    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-//            throws ServletException, IOException {
-//        processRequest(request, response);
-//    }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 }
